@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1000x Text Generator</title>
+<style>
+body {
+  background: #111827;
+  color: white;
+  font-family: Arial;
+  padding: 20px;
+}
+.container {
+  max-width: 500px;
+  margin: 40px auto;
+  background: #1f2937;
+  padding: 20px;
+  border-radius: 15px;
+}
+input, textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px;
+  border: none;
+  border-radius: 8px;
+  margin: 10px 0;
+  font-size: 16px;
+}
+textarea {
+  height: 250px;
+}
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #6366f1;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>✨ 1000x Text Generator</h2>
+
+  <p>Masukkan Text</p>
+  <input id="textInput" placeholder="Masukkan teks anda...">
+
+  <p>Hasil 1000x</p>
+  <textarea id="result" readonly
+  placeholder="Hasil akan muncul di sini..."></textarea>
+
+  <button onclick="generate()">Generate 1000x</button>
+  <button onclick="copyText()">Salin Hasil</button>
+
+  <p id="status">Ready!</p>
+</div>
+
+<script>
+function generate() {
+  let text = document.getElementById("textInput").value;
+
+  if (!text.trim()) {
+    document.getElementById("status").innerText =
+      "Sila masukkan teks dahulu!";
+    return;
+  }
+
+  let result = Array(1000).fill(text).join("\n");
+
+  document.getElementById("result").value = result;
+  document.getElementById("status").innerText =
+    "Berjaya! 1000 teks telah dibuat.";
+}
+
+async function copyText() {
+  let result = document.getElementById("result");
+
+  if (!result.value) {
+    document.getElementById("status").innerText =
+      "Generate teks dahulu!";
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(result.value);
+    document.getElementById("status").innerText =
+      "Berjaya disalin!";
+  } catch (e) {
+    result.select();
+    document.execCommand("copy");
+    document.getElementById("status").innerText =
+      "Teks disalin!";
+  }
+}
+</script>
+
+</body>
+</html>
